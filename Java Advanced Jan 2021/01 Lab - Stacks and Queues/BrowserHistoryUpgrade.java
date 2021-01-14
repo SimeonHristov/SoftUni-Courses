@@ -1,23 +1,21 @@
-package StacksAndQueuesLAB;
+package StacksAndQueuesLAB_01;
 
-import javax.swing.text.AsyncBoxView;
 import java.util.ArrayDeque;
 import java.util.Scanner;
 
-public class BrowserHistory {
-
+public class BrowserHistoryUpgrade {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
 
         String command = scanner.nextLine();
         String currentURL = null;
-        // String previousURL = "";
+        String previousURL = null;
+
         ArrayDeque<String> websites = new ArrayDeque();
 
         while (!command.equals("Home")) {
 
-            //String currentURL = command;
             if (command.equals("back")) {
                 if (websites.isEmpty()) {
                     System.out.println("no previous URLs");
@@ -25,7 +23,14 @@ public class BrowserHistory {
                     continue;
                 } else {
                     currentURL = websites.pop();
+                    previousURL = command;
                 }
+            } else if (command.equals("forward")) {
+                if (currentURL==null) {
+                    System.out.println("no next URLs");
+                }
+
+                //websites.addFirst();
             } else {
                 if (currentURL != null) {
                     websites.push(currentURL);
@@ -37,6 +42,6 @@ public class BrowserHistory {
             command = scanner.nextLine();
         }
 
-
     }
+
 }
