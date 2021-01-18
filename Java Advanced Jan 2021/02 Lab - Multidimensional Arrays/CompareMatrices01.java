@@ -1,9 +1,7 @@
 package MultidimensionalArrays_Lab_03;
 
-import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.jar.JarEntry;
 
 public class CompareMatrices01 {
 
@@ -14,14 +12,28 @@ public class CompareMatrices01 {
         int[][] firstMatrix = readMatrix(scanner);
         int[][] secondMatrix = readMatrix(scanner);
 
-        boolean notEqual = false;
+        boolean notEqual = firstMatrix.length != secondMatrix.length;
 
-//        if ()
-//        for (int row = 0; row < firstMatrix.length; row++) {
-//
-//        }
+        if (!notEqual){
+            for (int row = 0; row < firstMatrix.length; row++) {
+                int[] firseArr = firstMatrix[row];
+                int[] secondArr = secondMatrix[row];
+                notEqual = firseArr.length != secondArr.length;
+                if(!notEqual) {
+                    for (int col = 0; col < firseArr.length; col++) {
+                        if (firseArr[col] != secondArr[col]){
+                            notEqual = true;
+                            break;
+                        }
+                    }
+                }
+                if (notEqual) {
+                    break;
+                }
+            }
+        }
 
-        String output = notEqual ? "equal" : "not equal";
+        String output = notEqual ? "not equal" : "equal";
 
         System.out.println(output);
 
