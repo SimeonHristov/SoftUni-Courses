@@ -3,7 +3,7 @@ package MultidimensionalArrays_Lab_03;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class CompareMatrices01 {
+public class CompareMatrices_01 {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
