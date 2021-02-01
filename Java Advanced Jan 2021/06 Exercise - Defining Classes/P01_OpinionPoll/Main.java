@@ -1,12 +1,10 @@
-package _12_DefiningClasses_Exercise;
-
-import org.w3c.dom.ls.LSOutput;
+package _12_DefiningClasses_Exercise.P01_OpinionPoll;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class P01_OpinionPoll {
+public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

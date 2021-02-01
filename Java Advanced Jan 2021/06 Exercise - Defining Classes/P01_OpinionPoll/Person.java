@@ -1,4 +1,4 @@
-package _12_DefiningClasses_Exercise;
+package _12_DefiningClasses_Exercise.P01_OpinionPoll;
 
 public class Person {
 

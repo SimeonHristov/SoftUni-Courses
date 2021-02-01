@@ -1,6 +1,5 @@
-package _12_DefiningClasses_Exercise;
+package _12_DefiningClasses_Exercise.P02_CompanyRoster;
 
-import javax.swing.plaf.basic.BasicTreeUI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

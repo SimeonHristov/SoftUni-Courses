@@ -1,11 +1,10 @@
-package _12_DefiningClasses_Exercise;
+package _12_DefiningClasses_Exercise.P02_CompanyRoster;
 
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class P02_CompanyRoster {
+public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
