@@ -1,4 +1,4 @@
-package _13_Workshop;
+package _13_Workshop.SmartArray_SmartStack;
 
 public class Main {
     public static void main(String[] args) {
