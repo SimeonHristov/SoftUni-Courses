@@ -22,13 +22,13 @@ public class Main {
             int currentMale = malesStack.peek();
             int currentFemale = femaleQue.peek();
 
-            if (currentMale == 0) {
+            if (currentMale <= 0) {
                 malesStack.pop();
                 continue;
             }
 
-            if (currentFemale == 0) {
-                malesStack.pop();
+            if (currentFemale <= 0) {
+                femaleQue.poll();
                 continue;
             }
 
@@ -57,9 +57,7 @@ public class Main {
                 } else {
                     malesStack.push(currentMale);
                 }
-
             }
-
         }
 
         System.out.println("Matches: " + matches);
