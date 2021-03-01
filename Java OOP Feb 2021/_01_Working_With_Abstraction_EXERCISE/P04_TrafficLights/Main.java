@@ -1,22 +1,21 @@
-package _01_Working_With_Abstraction_EXCERCISE.P04_TrafficLights;
-
-
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String[] lights = scanner.nextLine().split("\\s+");
-        int n = Integer.parseInt(scanner.nextLine());
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        Light[] lights = Arrays.stream(bufferedReader.readLine().split("\\s+")).map(s -> new Light(Signal.valueOf(s))).toArray(Light[]::new);
 
-        for (int i = 0; i < n; i++) {
+        int numberOfLightChanges = Integer.parseInt(bufferedReader.readLine());
+
+        for (int i = 0; i < numberOfLightChanges; i++) {
             for (int j = 0; j < lights.length; j++) {
-                TrafficLights trafficLights = TrafficLights.valueOf(lights[j]);
-                System.out.print(trafficLights + " ");
-                lights[j] = trafficLights.toString();
+                lights[j].changeSignal();
+                System.out.print(lights[j] + " ");
             }
             System.out.println();
         }
     }
 }
-
