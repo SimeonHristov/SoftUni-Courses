@@ -1,4 +1,4 @@
-//package _03_Inheritance_EXERCISE.P01_Person;
+package _03_Inheritance_EXERCISE.P01_Person;
 
 import java.util.Scanner;
 

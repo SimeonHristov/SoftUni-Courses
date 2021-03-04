@@ -24,6 +24,6 @@ public class Hero {
                 this.getClass().getName(),
                 this.getUsername(),
                 this.getLevel());
-
     }
+
 }
