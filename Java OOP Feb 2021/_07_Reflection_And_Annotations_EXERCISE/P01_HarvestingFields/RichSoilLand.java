@@ -1,5 +1,3 @@
-package _07_Reflection_And_Annotations_EXERCISE.P01_HarvestingFields;
-
 import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.stream.Stream;
