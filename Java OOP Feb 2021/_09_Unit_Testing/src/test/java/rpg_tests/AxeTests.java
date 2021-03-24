@@ -1,30 +1,41 @@
 package rpg_tests;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import rpg_lab.Axe;
 import rpg_lab.Dummy;
 
 public class AxeTests {
 
+    private static final int AXE_ATTACK = 10;
+    private static final int AXE_DURABILITY = 10;
+    private static final int DUMMY_HEALTH = 10;
+    private static final int DUMMY_XP = 10;
+
+    private Axe axe;
+    private Dummy dummy;
+
+    @Before
+    public void setUp() {
+        this.axe = new Axe(AXE_ATTACK, AXE_DURABILITY);
+        this.dummy = new Dummy(DUMMY_HEALTH, DUMMY_XP);
+    }
+
     @Test
-    public void weaponAttacksLoseDurability(){
+    public void weaponAttacksLoseDurability() {
         //Arrange
-        Axe axe = new Axe(10,10);
-        Dummy dummy = new Dummy(10,10);
         //Act
         axe.attack(dummy);
         //Assert
-        Assert.assertEquals(9,axe.getDurabilityPoints());
+        Assert.assertEquals(AXE_DURABILITY - 1, axe.getDurabilityPoints());
     }
 
-    @Test (expected = IllegalStateException.class) // Assert
+    @Test(expected = IllegalStateException.class) // Assert
     public void brokenWeaponCantAttack() {
-        Axe axe = new Axe(10,1);
-        Dummy dummy = new Dummy(20,10);
+        Axe axe = new Axe(AXE_ATTACK, AXE_DURABILITY - AXE_DURABILITY);
+        this.axe.attack(dummy);
 
-        axe.attack(dummy);
-        axe.attack(dummy);
     }
 }
 

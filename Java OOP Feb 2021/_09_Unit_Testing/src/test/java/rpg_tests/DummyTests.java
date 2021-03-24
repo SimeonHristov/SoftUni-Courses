@@ -1,50 +1,48 @@
 package rpg_tests;
 
-import org.junit.Assert;
+
+import org.junit.Before;
 import org.junit.Test;
-import rpg_lab.Axe;
 import rpg_lab.Dummy;
-import rpg_lab.Hero;
+
+import static org.junit.Assert.assertEquals;
+
 
 public class DummyTests {
+    public static int XP = 10;
+    public static int DUMMY_HP = 10;
+    public static int ATTACK_POINTS = 1;
 
-    @Test
-    public void DummyLosesHealthWhenAttacked () {
-        Axe axe = new Axe(10,10);
-        Dummy dummy = new Dummy(20,10);
-        //Act
-        axe.attack(dummy);
-        //Assert
-        Assert.assertEquals(10,dummy.getHealth());
-    }
+    Dummy dummy;
+    Dummy deadDummy;
 
-    @Test (expected = IllegalStateException.class)
-    public void DeadDummyThrowsException () {
-        Axe axe = new Axe(10,1);
-        Dummy dummy = new Dummy(20,10);
-
-        axe.attack(dummy);
-        axe.attack(dummy);
+    @Before
+    public void createObjects(){
+        this.dummy = new Dummy(DUMMY_HP, XP);
+        this.deadDummy = new Dummy(0, XP);
     }
 
     @Test
-    public void DeadDummyGivesXP () {
-        //Axe axe = new Axe(10,1);
-        Dummy dummy = new Dummy(5,10);
-        Hero hero = new Hero("Gogo");
+    public void loseHealthWhenAttacked(){
+        int actual = dummy.getHealth();
 
-        hero.attack(dummy);
+        dummy.takeAttack(ATTACK_POINTS);
 
-        Assert.assertEquals(10, hero.getExperience());
+        assertEquals(DUMMY_HP - ATTACK_POINTS, dummy.getHealth());
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void shouldThrowWhenDeadAttacked(){
+        deadDummy.takeAttack(ATTACK_POINTS);
     }
 
     @Test
-    public void LiveDummyDoesntGiveXP () {
-        Dummy dummy = new Dummy(15,10);
-        Hero hero = new Hero("Gogo");
+    public void shouldGiveXPWhenDead(){
+        assertEquals(XP, deadDummy.giveExperience());
+    }
 
-        hero.attack(dummy);
-
-        Assert.assertEquals(0,hero.getExperience());
+    @Test(expected = IllegalStateException.class)
+    public void shouldThrowWhenGiveXpAlive(){
+        dummy.giveExperience();
     }
 }
