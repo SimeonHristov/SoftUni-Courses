@@ -2,48 +2,35 @@ package viceCity.repositories.interfaces;
 
 import viceCity.models.guns.Gun;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-import static viceCity.common.ConstantMessages.GUN_TYPE_INVALID;
+public class GunRepository implements Repository<Gun>{
 
-public class GunRepository implements Repository {
+    private Map<String, Gun> models;
 
-    private List<Gun> models;
-
-    public GunRepository(List<Gun> models) {
-        this.models = new ArrayList<>();
+    public GunRepository() {
+        this.models = new LinkedHashMap<>();
     }
 
     @Override
-    public Collection getModels() {
-        return Collections.unmodifiableList(this.models);
+    public Collection<Gun> getModels() {
+        return Collections.unmodifiableCollection(models.values());
     }
 
     @Override
-    public void add(Object model) {
-        if (this.models.contains(model)){
-            throw new IllegalArgumentException(GUN_TYPE_INVALID);
-        }
-        this.models.add((Gun) model);
+    public void add(Gun model) {
+        this.models.putIfAbsent(model.getName(), model);
     }
 
     @Override
-    public boolean remove(Object model) {
-        return this.models.removeIf(g -> g.getName().equals(model.getClass().getSimpleName()));
+    public boolean remove(Gun model) {
+        Gun removed = this.models.remove(model.getName());
+        return removed != null;
     }
 
     @Override
-    public Object find(String name) {
-        Gun gun = null;
-        for (Gun model : models) {
-            if (model.getName().equals(name)){
-               gun = model;
-               break;
-            }
-        }
-        return gun;
+    public Gun find(String name) {
+       return this.models.get(name);
     }
+        //return this.models.entrySet().stream().filter(k ->k.getKey().equals(name)).findFirst().orElse(null);
 }

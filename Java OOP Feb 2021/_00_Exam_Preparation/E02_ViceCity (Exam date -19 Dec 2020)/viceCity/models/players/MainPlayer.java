@@ -1,14 +1,11 @@
 package viceCity.models.players;
 
-import viceCity.models.BasePlayer;
+public class MainPlayer extends BasePlayer{
 
-public class MainPlayer extends BasePlayer implements Player {
-    private String name = "Tommy Vercetti";
-    private int lifePoints = 100;
+    private static final int HP = 100;
+    private static final String NAME = "Tommy Vercetti";
 
-
-    private MainPlayer() {
-        this.name = name;
-        this.lifePoints = lifePoints;
+    public MainPlayer() {
+        super(NAME, HP);
     }
 }
