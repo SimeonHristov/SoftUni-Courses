@@ -7,8 +7,8 @@
 #Programming Fundamentals (with Java)  
 #Java Advanced  
 #Java OOP  
-#JavaScript Advanced
-#MySQL (Java DB)
-#Spring Data (Java DB)
+#JavaScript Advanced  
+#MySQL (Java DB)  
+#Spring Data (Java DB)  
 
 
