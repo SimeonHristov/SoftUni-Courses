@@ -1,6 +1,3 @@
-CREATE DATABASE `Movies`;
-
-use `movies`;
 
 CREATE TABLE `directors` (
 `id` INT PRIMARY KEY AUTO_INCREMENT,

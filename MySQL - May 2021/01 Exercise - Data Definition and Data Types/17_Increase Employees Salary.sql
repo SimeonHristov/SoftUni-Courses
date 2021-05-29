@@ -1,4 +1,4 @@
 UPDATE  `employees`
-SET `salary` = (`salary` + (`salary`/ 10)) * 1.0
-WHERE `id` >= 1;
+SET `salary` = `salary` * 1.1
+-- WHERE `id` >= 1;
 
