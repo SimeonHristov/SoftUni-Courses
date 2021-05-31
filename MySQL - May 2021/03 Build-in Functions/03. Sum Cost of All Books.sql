@@ -1,1 +1,1 @@
-03. Sum Cost of All Books
+select  Round(SUM(cost),2) as sum from books;
