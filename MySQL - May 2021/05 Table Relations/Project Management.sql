@@ -17,5 +17,5 @@ project_lead_id int,
 constraint fk_client_project
 foreign key (client_id) REFERENCES clients(id),
 constraint fk_project_employee
-foreign key (project_lead_id) REFERENCES employees(project_id)
+foreign key (project_lead_id) REFERENCES employees(id)
 );
