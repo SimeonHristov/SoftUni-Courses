@@ -15,3 +15,4 @@ SELECT ufn_is_word_comprised('bobr', 'Rob');
 SELECT ufn_is_word_comprised('pppp', 'Guy');
 
 DROP FUNCTION IF EXISTS ufn_is_word_comprised;
+

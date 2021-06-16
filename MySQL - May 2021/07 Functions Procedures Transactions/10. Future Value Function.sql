@@ -1,16 +1,9 @@
-delimiter ##
-
-CREATE FUNCTION `ufn_calculate_future_value` (sum decimal (10,4), y_rate double (3,2), years int)
-RETURNS decimal (10,4)
+CREATE FUNCTION ufn_calculate_future_value(sum DECIMAL(10,4), yearly_interest_rate DECIMAL(10,4), number_of_years INT)
+RETURNS DECIMAL(10,4)
 DETERMINISTIC
 BEGIN
-	declare future_value decimal (10,4);
-    
-    set future_value := sum *(power((1 + y_rate),years)); 
-    
-RETURN future_value;
-END ##
+    DECLARE result DECIMAL(10,4);
+    SET result := sum * (pow((yearly_interest_rate  + 1),  number_of_years));
+	RETURN result;
+END;
 
-
-
-select ufn_calculate_future_value (1000,0.5,5);

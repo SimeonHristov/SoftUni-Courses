@@ -1,7 +1,8 @@
 delimiter ##
 CREATE PROCEDURE `usp_get_employees_by_salary_level` (level_salary varchar(10))
 BEGIN
-	select first_name, last_name from employees
+	select first_name, last_name 
+    from employees
 	where 
     (case 
     when level_salary = 'low' then 
