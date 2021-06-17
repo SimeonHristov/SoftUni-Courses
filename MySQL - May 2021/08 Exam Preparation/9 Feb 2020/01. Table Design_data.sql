@@ -1,4 +1,4 @@
-use fsd;
+use football_scout_database;
 
 insert into countries (id, name) values (1, 'Morocco');
 insert into countries (id, name) values (2, 'China');
