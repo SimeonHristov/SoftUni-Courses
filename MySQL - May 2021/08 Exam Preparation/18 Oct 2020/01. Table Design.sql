@@ -1,5 +1,5 @@
--- create schema softuni_stores_system;
--- use softuni_stores_system;
+create schema softuni_stores_system;
+use softuni_stores_system;
 
 create table pictures (
 	id int primary key auto_increment,
@@ -72,7 +72,7 @@ create table employees (
     last_name varchar(20)  not null,
     salary decimal (19,2) not null default 0,
     hire_date DATE not null,
-    manager_id int not null,
+    manager_id int,
     store_id int not null,
     constraint fk_employees_managers
     foreign key (manager_id) references employees(id),
