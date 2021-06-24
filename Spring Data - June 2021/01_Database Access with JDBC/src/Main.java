@@ -24,11 +24,11 @@ public class Main {
             case 2: exerciseTwo(); //02. Get Villains’ Names
             case 3: exerciseThree(); //03. Get Minion Names
             case 4: // exerciseFour(); //04. Add Minion
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
+            case 5: exerciseFive(); //05. Change Town Names Casing
+            case 6: // exerciseSix(); //06. Add Minion
+            case 7: // exerciseSeven(); //07. Add Minion
+            case 8: // exerciseEight(); //08. Add Minion
+            case 9: // exerciseNine(); //09. Add Minion
         }
 
 
@@ -74,6 +74,35 @@ public class Main {
         while (resultSet.next()) {
             System.out.printf("%d. %s %d %n", ++counter, resultSet.getString("name"), resultSet.getInt("age"));
         }
+    }
+
+    private static void exerciseFive() throws SQLException, IOException {
+        System.out.println("Enter country name:");
+        String countryName = reader.readLine();
+
+        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE towns SET name = UPPER(name) WHERE country = ?");
+
+        preparedStatement.setString(1, countryName);
+
+        int affectedRow = preparedStatement.executeUpdate();
+
+        if(affectedRow == 0) {
+            System.out.println("No town names were affected.");
+            return;
+        }
+
+        System.out.printf("%d town names were affected.%n",affectedRow);
+
+        PreparedStatement preparedStatementTowns = connection.prepareStatement("SELECT  name FROM towns WHERE country = ?");
+        preparedStatementTowns.setString(1, countryName);
+        ResultSet resultSet = preparedStatementTowns.executeQuery();
+
+        while (resultSet.next()) {
+            System.out.println(resultSet.getString("name"));
+        }
+
+
+
     }
 
     private static Set<String> getMinionsByVillainId(int villainId) throws SQLException {
