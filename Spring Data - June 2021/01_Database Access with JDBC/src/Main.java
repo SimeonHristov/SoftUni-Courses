@@ -2,9 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.*;
-import java.util.LinkedHashSet;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
 
@@ -21,19 +19,23 @@ public class Main {
         int exerciseNumber = Integer.parseInt(reader.readLine());
 
         switch (exerciseNumber) {
-            case 2: exerciseTwo(); //02. Get Villains’ Names
-            case 3: exerciseThree(); //03. Get Minion Names
+            case 2:
+                exerciseTwo(); //02. Get Villains’ Names
+            case 3:
+                exerciseThree(); //03. Get Minion Names
             case 4: // exerciseFour(); //04. Add Minion
-            case 5: exerciseFive(); //05. Change Town Names Casing
+            case 5:
+                exerciseFive(); //05. Change Town Names Casing
             case 6: // exerciseSix(); //06. Add Minion
-            case 7: // exerciseSeven(); //07. Add Minion
+            case 7:
+                exerciseSeven(); //07. Print All Minion Names
             case 8: // exerciseEight(); //08. Add Minion
             case 9: // exerciseNine(); //09. Add Minion
         }
 
 
-
     }
+
 
     private static void exerciseTwo() throws SQLException {
         //02. Get Villains’ Names
@@ -86,28 +88,49 @@ public class Main {
 
         int affectedRow = preparedStatement.executeUpdate();
 
-        if(affectedRow == 0) {
+        if (affectedRow == 0) {
             System.out.println("No town names were affected.");
             return;
         }
 
-        System.out.printf("%d town names were affected.%n",affectedRow);
+        System.out.printf("%d town names were affected.%n", affectedRow);
 
         PreparedStatement preparedStatementTowns = connection.prepareStatement("SELECT  name FROM towns WHERE country = ?");
         preparedStatementTowns.setString(1, countryName);
         ResultSet resultSet = preparedStatementTowns.executeQuery();
 
+        //TODO fix output format
         while (resultSet.next()) {
             System.out.println(resultSet.getString("name"));
         }
 
 
+    }
 
+    private static void exerciseSeven() throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT name FROM minions");
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        //TODO try using ArrayDeque
+        List<String> minionNames = new ArrayList<>();
+        while (resultSet.next()) {
+            minionNames.add(resultSet.getString("name"));
+        }
+
+        int start = 0;
+        int end = minionNames.size() - 1;
+
+        for (int i = 0; i < minionNames.size(); i++) {
+            System.out.println(i % 2 == 0
+                    ? minionNames.get(start++)
+                    : minionNames.get(end--));
+        }
     }
 
     private static Set<String> getMinionsByVillainId(int villainId) throws SQLException {
-        Set <String> result = new LinkedHashSet<>();
-        return  null;
+        Set<String> result = new LinkedHashSet<>();
+        return null;
 
     }
 
@@ -119,7 +142,7 @@ public class Main {
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
-        if (!resultSet.next() ) {
+        if (!resultSet.next()) {
             return String.format("No villain with ID %d exists in the database.", id);
         } else {
             resultSet.next();
