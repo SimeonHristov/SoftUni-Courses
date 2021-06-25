@@ -15,27 +15,44 @@ public class Main {
 
         connection = getConnection();
 
-        System.out.println("Enter Exercise number:");
-        int exerciseNumber = Integer.parseInt(reader.readLine());
+        boolean again = true;
 
-        switch (exerciseNumber) {
-            case 2:
-                exerciseTwo(); //02. Get Villains’ Names
-            case 3:
-                exerciseThree(); //03. Get Minion Names
-            case 4: // exerciseFour(); //04. Add Minion
-            case 5:
-                exerciseFive(); //05. Change Town Names Casing
-            case 6: // exerciseSix(); //06. Add Minion
-            case 7:
-                exerciseSeven(); //07. Print All Minion Names
-            case 8: // exerciseEight(); //08. Add Minion
-            case 9: // exerciseNine(); //09. Add Minion
+        while (again) {
+            again = false;
+
+            System.out.println("Enter Exercise number:");
+            int exerciseNumber = Integer.parseInt(reader.readLine());
+
+            switch (exerciseNumber) {
+                case 2:
+                    exerciseTwo(); //02. Get Villains’ Names
+                    break;
+                case 3:
+                    exerciseThree(); //03. Get Minion Names
+                    break;
+                case 4: //TODO // exerciseFour(); //04. Add Minion
+                    break;
+                case 5:
+                    exerciseFive(); //05. Change Town Names Casing
+                    break;
+                case 6:
+                    exerciseSix(); //06. Remove Villain
+                    break;
+                case 7:
+                    exerciseSeven(); //07. Print All Minion Names
+                    break;
+                case 8: //TODO // exerciseEight(); //08. Increase Minions Age
+                    break;
+                case 9:
+                    exerciseNine(); //09. Increase Age Stored Procedure
+                    break;
+                default:
+                    System.out.println("Incorrect exercise number!");
+                    again = true;
+            }
         }
 
-
     }
-
 
     private static void exerciseTwo() throws SQLException {
         //02. Get Villains’ Names
@@ -72,13 +89,13 @@ public class Main {
         ResultSet resultSet = preparedStatement.executeQuery();
         int counter = 0;
 
-
         while (resultSet.next()) {
             System.out.printf("%d. %s %d %n", ++counter, resultSet.getString("name"), resultSet.getInt("age"));
         }
     }
 
     private static void exerciseFive() throws SQLException, IOException {
+        //05. Change Town Names Casing
         System.out.println("Enter country name:");
         String countryName = reader.readLine();
 
@@ -107,7 +124,16 @@ public class Main {
 
     }
 
+    private static void exerciseSix() throws IOException {
+        //06. Remove Villain
+        System.out.println("Enter id of villain to be removed");
+        int villainId = Integer.parseInt(reader.readLine());
+
+
+    }
+
     private static void exerciseSeven() throws SQLException {
+        //07. Print All Minion Names
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT name FROM minions");
 
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -128,6 +154,24 @@ public class Main {
         }
     }
 
+    private static void exerciseNine() throws SQLException, IOException {
+        //09. Increase Age Stored Procedure
+        System.out.println("Enter minion id");
+        int minionID = Integer.parseInt(reader.readLine());
+
+        CallableStatement callableStatement = connection.prepareCall("CALL usp_get_older(?)");
+        callableStatement.setInt(1, minionID);
+
+        int affectedRows = callableStatement.executeUpdate();
+
+        PreparedStatement getUpdatedMinionNameAge = connection.prepareStatement("SELECT name, age FROM minions WHERE id = ?");
+        getUpdatedMinionNameAge.setInt(1,minionID);
+        ResultSet resultSet = getUpdatedMinionNameAge.executeQuery();
+
+        resultSet.next();
+        System.out.printf("%s %d", resultSet.getString(1), resultSet.getInt(2));
+    }
+
     private static Set<String> getMinionsByVillainId(int villainId) throws SQLException {
         Set<String> result = new LinkedHashSet<>();
         return null;
@@ -141,18 +185,17 @@ public class Main {
         //preparedStatement.setInt(1, id);
 
         ResultSet resultSet = preparedStatement.executeQuery();
-
         if (!resultSet.next()) {
             return String.format("No villain with ID %d exists in the database.", id);
         } else {
-            resultSet.next();
+        //resultSet.next();
             return String.format("Villain: " + resultSet.getString(1));
         }
 
     }
 
     private static Connection getConnection() throws IOException, SQLException {
-        //TODO set(hardcode) username
+        //TODO set username
         System.out.println("Enter username:");
         //String user = reader.readLine();
 
