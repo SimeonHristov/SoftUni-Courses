@@ -24,27 +24,21 @@ public class Main {
             int exerciseNumber = Integer.parseInt(reader.readLine());
 
             switch (exerciseNumber) {
-                case 2:
-                    exerciseTwo(); //02. Get Villains’ Names
+                case 2: exerciseTwo(); //02. Get Villains’ Names
                     break;
-                case 3:
-                    exerciseThree(); //03. Get Minion Names
+                case 3: exerciseThree(); //03. Get Minion Names
                     break;
-                case 4: //TODO // exerciseFour(); //04. Add Minion
+                case 4: exerciseFour(); //04. Add Minion
                     break;
-                case 5:
-                    exerciseFive(); //05. Change Town Names Casing
+                case 5: exerciseFive(); //05. Change Town Names Casing
                     break;
-                case 6:
-                    exerciseSix(); //06. Remove Villain
+                case 6: exerciseSix(); //06. Remove Villain
                     break;
-                case 7:
-                    exerciseSeven(); //07. Print All Minion Names
+                case 7: exerciseSeven(); //07. Print All Minion Names
                     break;
                 case 8: //TODO // exerciseEight(); //08. Increase Minions Age
                     break;
-                case 9:
-                    exerciseNine(); //09. Increase Age Stored Procedure
+                case 9: exerciseNine(); //09. Increase Age Stored Procedure
                     break;
                 default:
                     System.out.println("Incorrect exercise number!");
@@ -92,6 +86,92 @@ public class Main {
         while (resultSet.next()) {
             System.out.printf("%d. %s %d %n", ++counter, resultSet.getString("name"), resultSet.getInt("age"));
         }
+    }
+
+    public static void exerciseFour() throws IOException {
+        //04. Add Minion
+        System.out.println("Enter minion info:");
+        String[] tokens = reader.readLine().split("\\s+");
+        String minionName = tokens[1];
+        int minionAge = Integer.parseInt(tokens[2]);
+        String minionTown = tokens[3];
+
+        System.out.println("Enter villain info:");
+        String villainName = reader.readLine().split("\\s+")[1];
+
+
+        StringBuilder sb = new StringBuilder();
+
+        try (
+                PreparedStatement townStatement = connection.prepareStatement("SELECT t.id FROM towns AS t WHERE t.name = ?");
+                PreparedStatement addTownStatement = connection.prepareStatement("INSERT INTO towns (`name`, `country`) VALUES (?, 'Unknown')");
+                PreparedStatement villainStatement = connection.prepareStatement("SELECT * FROM villains AS v WHERE v.name = ?");
+                PreparedStatement addVillainStatement = connection.prepareStatement("INSERT INTO villains (`name`, `evilness_factor`) VALUES (?, 'evil')");
+                PreparedStatement addMinionStatement = connection.prepareStatement("INSERT INTO minions (`name`, `age`, `town_id`) VALUES (?, ?, ?)");
+                PreparedStatement getNewMinionIdStatement = connection.prepareStatement("SELECT m.id FROM minions AS m WHERE m.name = ?");
+                PreparedStatement addMinionToVillainStatement = connection.prepareStatement("INSERT INTO minions_villains (`minion_id`, `villain_id`) VALUES (?, ?)")) {
+
+            connection.setAutoCommit(false);
+
+            try {
+                townStatement.setString(1, minionTown);
+
+                ResultSet towns = townStatement.executeQuery();
+
+                if (!towns.next()) {
+                    addTownStatement.setString(1, minionTown);
+                    addTownStatement.executeUpdate();
+
+                    sb.append(String.format("Town %s was added to the database.%n", minionTown));
+                }
+
+                towns = townStatement.executeQuery();
+                towns.next();
+                int townID = towns.getInt("id");
+
+                villainStatement.setString(1, villainName);
+
+                ResultSet villain = villainStatement.executeQuery();
+                if (!villain.isBeforeFirst()) {
+                    addVillainStatement.setString(1, villainName);
+                    addVillainStatement.executeUpdate();
+
+                    sb.append(String.format("Villain %s was added to the database.%n", villainName));
+                }
+
+                villain = villainStatement.executeQuery();
+                villain.next();
+                int villainID = villain.getInt("id");
+
+                //add minion
+                addMinionStatement.setString(1, minionName);
+                addMinionStatement.setInt(2, minionAge);
+                addMinionStatement.setInt(3, townID);
+                addMinionStatement.executeUpdate();
+
+                //get minion ID
+                getNewMinionIdStatement.setString(1, minionName);
+                ResultSet minions = getNewMinionIdStatement.executeQuery();
+                minions.next();
+                int minionID = minions.getInt("id");
+
+                //add record in villains_minions table
+                addMinionToVillainStatement.setInt(1, minionID);
+                addMinionToVillainStatement.setInt(2, villainID);
+                addMinionToVillainStatement.executeUpdate();
+
+                sb.append(String.format("Successfully added %s to be minion of %s", minionName, villainName));
+
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+                throw e;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(sb.toString().trim());
     }
 
     private static void exerciseFive() throws SQLException, IOException {
