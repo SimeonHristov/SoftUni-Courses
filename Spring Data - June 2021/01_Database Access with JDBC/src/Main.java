@@ -36,7 +36,7 @@ public class Main {
                     break;
                 case 7: exerciseSeven(); //07. Print All Minion Names
                     break;
-                case 8: //TODO // exerciseEight(); //08. Increase Minions Age
+                case 8: exerciseEight(); //08. Increase Minions Age
                     break;
                 case 9: exerciseNine(); //09. Increase Age Stored Procedure
                     break;
@@ -204,12 +204,34 @@ public class Main {
 
     }
 
-    private static void exerciseSix() throws IOException {
+    private static void exerciseSix() throws IOException, SQLException {
         //06. Remove Villain
         System.out.println("Enter id of villain to be removed");
         int villainId = Integer.parseInt(reader.readLine());
+        int releasedMinions = 0;
 
+        connection.setAutoCommit(false);
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT name FROM villains WHERE id = ?");
+        preparedStatement.setInt(1, villainId);
+        ResultSet villainNameRS = preparedStatement.executeQuery();
+        if (!villainNameRS.next()) {
+            System.out.println("No such villain was found");
+        } else{
+            villainNameRS.next();
+            String name = villainNameRS.getString("name");
+            preparedStatement = connection.prepareStatement("DELETE FROM minions_villains WHERE villain_id = ?");
+            preparedStatement.setInt(1, villainId);
+            releasedMinions = preparedStatement.executeUpdate();
 
+            preparedStatement = connection.prepareStatement("DELETE FROM villains WHERE id = ?");
+            preparedStatement.setInt(1, villainId);
+            preparedStatement.executeUpdate();
+
+            connection.commit();
+
+            System.out.println(name + " was deleted");
+            System.out.println(releasedMinions + " minions released");
+        }
     }
 
     private static void exerciseSeven() throws SQLException {
@@ -231,6 +253,27 @@ public class Main {
             System.out.println(i % 2 == 0
                     ? minionNames.get(start++)
                     : minionNames.get(end--));
+        }
+    }
+
+    private static void exerciseEight() throws IOException, SQLException {
+        //08. Increase Minions Age
+        System.out.println("Enter minions IDs:");
+        int[] minionsId = Arrays.stream(reader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE minions SET age = age + 1, name = CONCAT(UPPER(substring(name, 1, 1)), substring(name, 2)) WHERE id = ?;");
+
+        for (int i = 0; i < minionsId.length; i++) {
+            preparedStatement.setInt(1,minionsId[i]);
+            preparedStatement.executeUpdate();
+        }
+
+        preparedStatement = connection.prepareStatement("SELECT name, age FROM minions");
+
+        ResultSet allMinionsRS = preparedStatement.executeQuery();
+
+        while(allMinionsRS.next()){
+            System.out.println(allMinionsRS.getString("name") + " " + allMinionsRS.getString("age"));
         }
     }
 
