@@ -11,8 +11,10 @@ import java.awt.geom.GeneralPath;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.sql.SQLOutput;
 import java.util.List;
+import java.util.Objects;
 
 public class Engine implements Runnable{
 
@@ -34,7 +36,7 @@ public class Engine implements Runnable{
             switch (exerciseNum) {
                 case 2 -> exerciseTwo(); //Change casing
                 case 3 -> exerciseThree(); //Contains Employee
-//                case 4 -> exerciseFour(); //Employees with Salary over 50 000
+                case 4 -> exerciseFour(); //Employees with Salary over 50 000
 //                case 5 -> exerciseFive(); //Employees from Department
 //                case 6 -> exerciseSix(); //Adding a new Address and Updating Employee
 //                case 7 -> exerciseSeven(); //Addresses with Employee Count
@@ -52,6 +54,21 @@ public class Engine implements Runnable{
             entityManager.close();
         }
 
+
+    }
+
+    private void exerciseFour() throws IOException {
+        System.out.println("Enter salary: ");
+        BigDecimal empSalary = BigDecimal.valueOf(Long.parseLong(reader.readLine()) );
+
+        List<Employee> employeeList = entityManager.createQuery("SELECT e FROM Employee e " +
+                "WHERE e.salary > :salary", Employee.class)
+                .setParameter("salary", empSalary)
+                .getResultList();
+
+        for (Employee employee : employeeList) {
+            System.out.println(employee.getFirstName());
+        }
 
     }
 
