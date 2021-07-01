@@ -1,12 +1,17 @@
+import entities.Employee;
 import entities.Town;
 import net.bytebuddy.asm.MemberSubstitution;
+import org.w3c.dom.ls.LSOutput;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.swing.*;
+import java.awt.geom.GeneralPath;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLOutput;
 import java.util.List;
 
 public class Engine implements Runnable{
@@ -28,7 +33,7 @@ public class Engine implements Runnable{
 
             switch (exerciseNum) {
                 case 2 -> exerciseTwo(); //Change casing
-//                case 3 -> exerciseThree(); //Contains Employee
+                case 3 -> exerciseThree(); //Contains Employee
 //                case 4 -> exerciseFour(); //Employees with Salary over 50 000
 //                case 5 -> exerciseFive(); //Employees from Department
 //                case 6 -> exerciseSix(); //Adding a new Address and Updating Employee
@@ -47,6 +52,27 @@ public class Engine implements Runnable{
             entityManager.close();
         }
 
+
+    }
+
+    private void exerciseThree() throws IOException {
+        System.out.println("Enter employee name: ");
+        String[] names = reader.readLine().split("\\s+");
+        String firstName  = names[0];
+        String lastName  = names[1];
+
+        try {
+            Employee employee = entityManager.createQuery("SELECT e FROM Employee e " +
+                    "WHERE e.firstName =:first AND e.lastName =:last", Employee.class)
+                    .setParameter("first",firstName)
+                    .setParameter("last",lastName)
+                    .getSingleResult();
+
+            System.out.println("Yes");
+
+        } catch (NoResultException e) {
+            System.out.println("No");
+        }
 
     }
 
