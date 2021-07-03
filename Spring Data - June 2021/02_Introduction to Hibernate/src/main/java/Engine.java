@@ -1,20 +1,13 @@
 import entities.Employee;
 import entities.Town;
-import net.bytebuddy.asm.MemberSubstitution;
-import org.w3c.dom.ls.LSOutput;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.swing.*;
-import java.awt.geom.GeneralPath;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.sql.SQLOutput;
 import java.util.List;
-import java.util.Objects;
 
 public class Engine implements Runnable{
 
@@ -37,8 +30,8 @@ public class Engine implements Runnable{
                 case 2 -> exerciseTwo(); //Change casing
                 case 3 -> exerciseThree(); //Contains Employee
                 case 4 -> exerciseFour(); //Employees with Salary over 50 000
-//                case 5 -> exerciseFive(); //Employees from Department
-//                case 6 -> exerciseSix(); //Adding a new Address and Updating Employee
+                case 5 -> exerciseFive(); //Employees from Department
+                case 6 -> exerciseSix(); //Adding a new Address and Updating Employee
 //                case 7 -> exerciseSeven(); //Addresses with Employee Count
 //                case 8 -> exerciseEight(); //Get Employee with Project
 //                case 9 -> exerciseNine(); //Find latest 10 Projects
@@ -54,6 +47,28 @@ public class Engine implements Runnable{
             entityManager.close();
         }
 
+
+    }
+
+    private void exerciseSix() {
+    }
+
+    private void exerciseFive() throws IOException {
+        System.out.println("Enter Department name: "); //Research and Development (6)
+        String depName = reader.readLine();
+
+        entityManager.createQuery("SELECT e FROM Employee e " +
+                "WHERE e.department.name = :departmentName "
+                + "ORDER BY e.salary, e.id", Employee.class)
+                .setParameter("departmentName", depName)
+                .getResultStream()
+                .forEach(employee -> {
+                    System.out.printf("%s %s from %s - $%.2f%n"
+                            , employee.getFirstName()
+                            , employee.getLastName()
+                            , employee.getDepartment().getName()
+                            , employee.getSalary());
+                });
 
     }
 
