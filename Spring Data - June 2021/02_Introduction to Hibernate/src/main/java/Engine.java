@@ -1,8 +1,10 @@
+import entities.Address;
 import entities.Employee;
 import entities.Town;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,7 +34,7 @@ public class Engine implements Runnable{
                 case 4 -> exerciseFour(); //Employees with Salary over 50 000
                 case 5 -> exerciseFive(); //Employees from Department
                 case 6 -> exerciseSix(); //Adding a new Address and Updating Employee
-//                case 7 -> exerciseSeven(); //Addresses with Employee Count
+                case 7 -> exerciseSeven(); //Addresses with Employee Count
 //                case 8 -> exerciseEight(); //Get Employee with Project
 //                case 9 -> exerciseNine(); //Find latest 10 Projects
 //                case 10-> exerciseTen(); //Increase Salaries
@@ -50,7 +52,30 @@ public class Engine implements Runnable{
 
     }
 
-    private void exerciseSix() {
+    private void exerciseSeven() {
+
+    }
+
+    private void exerciseSix() throws IOException {
+        System.out.println("Enter Address text: "); //Research and Development (6)
+        String addressText = reader.readLine();
+
+        System.out.println("Enter last name of employee to update: "); //Research and Development (6)
+        String lastName = reader.readLine();
+
+        Employee employee = entityManager.createQuery("SELECT e FROM Employee e "
+                + "WHERE e.lastName = :last_name", Employee.class)
+                .setParameter("last_name", lastName)
+                .getSingleResult();
+
+        Address address = new Address();
+        address.setText(addressText);
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(address);
+        employee.setAddress(address);
+        entityManager.getTransaction().commit();
+
     }
 
     private void exerciseFive() throws IOException {
