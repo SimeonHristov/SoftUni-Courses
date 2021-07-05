@@ -13,10 +13,10 @@
             <property name="hibernate.hbm2ddl.auto" value="update"/>
 
             <!--TODO CHANGE USER-->
-            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.username" value="USER"/>
 
             <!--TODO CHANGE PASSWORD-->
-            <property name="hibernate.connection.password" value="sp0stxx"/>
+            <property name="hibernate.connection.password" value="PASSWORD"/>
 
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
