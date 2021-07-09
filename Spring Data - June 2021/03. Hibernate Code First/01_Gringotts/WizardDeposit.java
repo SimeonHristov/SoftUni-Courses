@@ -5,8 +5,9 @@ import java.util.Date;
 
 @Entity
 @Table(name = "wizard_deposits")
-public class WizardDeposit extends  BaseEntity{
+public class WizardDeposit {
 
+    private int id;
     private String firstName;
     private String lastName;
     private String notes;
@@ -21,7 +22,15 @@ public class WizardDeposit extends  BaseEntity{
     private Date depositExpirationDate;
     private boolean isDepositExpired;
 
-    public WizardDeposit() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Column(name = "first_name", length = 50)
