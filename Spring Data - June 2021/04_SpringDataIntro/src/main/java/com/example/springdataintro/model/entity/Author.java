@@ -1,8 +1,7 @@
 package com.example.springdataintro.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "authors")
@@ -11,6 +10,7 @@ public class Author extends BaseEntity {
 
     private String firstName;
     private String lastName;
+    private Set<Book> books;
 
     public Author() {
     }
@@ -36,5 +36,14 @@ public class Author extends BaseEntity {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 }
