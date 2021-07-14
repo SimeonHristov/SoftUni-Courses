@@ -79,6 +79,35 @@ public class BookServiceImpl implements BookService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<String> findAllBookTitlesWithAgeRestriction(AgeRestriction ageRestriction) {
+        return  bookRepository
+                .findAllByAgeRestriction(ageRestriction)
+                .stream()
+                .map(b -> b.getTitle())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findAllGoldenBooksWithLessThan5000() {
+        return bookRepository
+                .findAllByEditionTypeAndCopiesLessThan(EditionType.GOLD, 5000)
+                .stream()
+                .map(b -> b.getTitle())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findAllBookTitleWithPriceLessThan5OrMoreThan40() {
+        return bookRepository.
+            findAllByPriceBetween(BigDecimal.valueOf(5L), BigDecimal.valueOf(40L))
+                .stream()
+                .map(book -> String.format("%s - $ %.2f",
+                        book.getTitle(),
+                        book.getPrice()))
+                .collect(Collectors.toList());
+    }
+
     private Book createBookFromInfo(String[] bookInfo) {
         EditionType editionType = EditionType.values()[Integer.parseInt(bookInfo[0])];
         LocalDate releaseDate = LocalDate
