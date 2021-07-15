@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Component
 public class CommandLineRunnerImpl implements CommandLineRunner {
@@ -42,18 +44,78 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
             case 1 -> booksTitlesByAgeRestriction();
             case 2 -> golderBook();
             case 3 -> booksByPrice();
-//            case 4 -> exerciseFour(); //Employees with Salary over 50 000
-//            case 5 -> exerciseFive(); //Employees from Department
-//            case 6 -> exerciseSix(); //Adding a new Address and Updating Employee
-//            case 7 -> exerciseSeven(); //Addresses with Employee Count
-//            case 8 -> exerciseEight(); //Get Employee with Project
-//            case 9 -> exerciseNine(); //Find latest 10 Projects
-//            case 10-> exerciseTen(); //Increase Salaries
-//            case 11 -> exerciseEleven(); //Find Employees by First Name
-//            case 12 -> exerciseTwelve(); //Employees Maximum Salaries
-//            case 13 -> exerciseThirteen(); //Remove Towns
+            case 4 -> NotReleasedBooksByYear();
+            case 5 -> findAllBooksBeforeDate();
+            case 6 -> authorSearch();
+            case 7 -> bookSearch();
+            case 8 -> bookTitlesSearchByAuthorName();
+            case 9 -> countBooksWithLongTitle();
+            case 10-> totalBookCopies();
+//            case 11 -> exerciseEleven();
+//            case 12 -> exerciseTwelve();
+//            case 13 -> exerciseThirteen();
             }
 
+    }
+
+    private void totalBookCopies() {
+        authorService
+                .findTotalBookCopiesByAuthor()
+                .forEach(System.out::println);
+    }
+
+    private void countBooksWithLongTitle() throws IOException {
+        System.out.println("Enter title length: ");
+        int len = Integer.parseInt(bufferedReader.readLine());
+
+        System.out.println(bookService
+                .findCountOfBooksWithTitleLongerThan(len));
+
+    }
+
+    private void bookTitlesSearchByAuthorName() throws IOException {
+        System.out.println("Enter string");
+        String input = bufferedReader.readLine();
+
+        bookService
+                .findAllBookTitlesByAuthor(input)
+                .forEach(System.out::println);
+    }
+
+    private void bookSearch() throws IOException {
+        System.out.println("Enter string: ");
+        String input = bufferedReader.readLine().toUpperCase();
+
+        bookService
+                .findBooksByString(input)
+                .forEach(System.out::println);
+    }
+
+    private void authorSearch() throws IOException {
+        System.out.println("Enter letter: ");
+        String input = bufferedReader.readLine();
+
+        authorService
+                .findAuthors(input)
+                .forEach(System.out::println);
+    }
+
+    private void findAllBooksBeforeDate() throws IOException {
+        System.out.println("Enter date: ");
+        LocalDate localDate = LocalDate.parse(bufferedReader.readLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+        bookService
+                .findAllBooksBeforeDate(localDate)
+                .forEach(System.out::println);
+    }
+
+    private void NotReleasedBooksByYear() throws IOException {
+        System.out.println("Enter year: ");
+        int year = Integer.parseInt(bufferedReader.readLine());
+
+        bookService
+                .findAllNotReleasedBooksByYear(year)
+                .forEach(System.out::println);
     }
 
     private void booksByPrice() {

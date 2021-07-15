@@ -11,4 +11,8 @@ public interface AuthorService {
     Author getRandomAuthor();
 
     List<String> getAllAuthorsOrderByCountOfTheirBooks();
+
+    List<String> findAuthors(String input);
+
+    List<String> findTotalBookCopiesByAuthor();
 }
