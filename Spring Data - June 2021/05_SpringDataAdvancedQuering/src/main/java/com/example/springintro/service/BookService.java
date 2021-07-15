@@ -31,4 +31,9 @@ public interface BookService {
     List<String> findAllBookTitlesByAuthor(String input);
 
     int findCountOfBooksWithTitleLongerThan(int len);
+
+    int increaseCopiesByDate(LocalDate localDate, int copies);
+
+    Book getBookByTitle(String title);
+
 }

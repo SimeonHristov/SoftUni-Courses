@@ -6,6 +6,7 @@ import com.example.springintro.service.AuthorService;
 import com.example.springintro.service.BookService;
 import com.example.springintro.service.CategoryService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -159,6 +160,15 @@ public class BookServiceImpl implements BookService {
                 .countOfBooksWithTileLengthMoreThan(len);
     }
 
+
+    @Override
+    @Transactional
+    public int increaseCopiesByDate(LocalDate localDate, int copies) {
+        int affectedRows = bookRepository
+                                .updateCopiesByReleaseDate(copies,localDate);
+        return affectedRows * copies;
+    }
+
     private Book createBookFromInfo(String[] bookInfo) {
         EditionType editionType = EditionType.values()[Integer.parseInt(bookInfo[0])];
         LocalDate releaseDate = LocalDate
@@ -177,5 +187,10 @@ public class BookServiceImpl implements BookService {
 
         return new Book(editionType, releaseDate, copies, price, ageRestriction, title, author, categories);
 
+    }
+
+    @Override
+    public Book getBookByTitle(String title) {
+        return bookRepository.findByTitle(title);
     }
 }

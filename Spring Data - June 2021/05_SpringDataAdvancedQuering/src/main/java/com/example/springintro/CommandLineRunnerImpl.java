@@ -7,11 +7,13 @@ import com.example.springintro.service.BookService;
 import com.example.springintro.service.CategoryService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Component
 public class CommandLineRunnerImpl implements CommandLineRunner {
@@ -51,11 +53,36 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
             case 8 -> bookTitlesSearchByAuthorName();
             case 9 -> countBooksWithLongTitle();
             case 10-> totalBookCopies();
-//            case 11 -> exerciseEleven();
-//            case 12 -> exerciseTwelve();
+            case 11 -> reducedBooks();
+            case 12 -> increaseBookCopies();
+//            case 13 -> exerciseThirteen();
 //            case 13 -> exerciseThirteen();
             }
 
+    }
+
+    private void reducedBooks() throws IOException {
+        System.out.println("Enter title: ");
+        String title = bufferedReader.readLine();
+
+        Book book = bookService.getBookByTitle(title);
+        if (book == null) {
+            System.out.println("No such book!");
+        } else {
+            System.out.printf("%s %s %s %.2f%n",
+                    book.getTitle(), book.getEditionType(), book.getAgeRestriction(), book.getPrice());
+        }
+    }
+
+
+    private void increaseBookCopies() throws IOException {
+        System.out.println("Enter date: ");
+        LocalDate localDate = LocalDate.parse(bufferedReader.readLine(), DateTimeFormatter.ofPattern("dd MMM yyyy"));
+        System.out.println("Enter copies ");
+        int copies = Integer.parseInt(bufferedReader.readLine());
+
+        System.out.println(bookService
+                .increaseCopiesByDate(localDate, copies));
     }
 
     private void totalBookCopies() {
