@@ -6,8 +6,17 @@ import javax.validation.constraints.Pattern;
 public class UserLoginDto {
 
     private String email;
+    private String password;
 
-    @Email
+    public UserLoginDto() {
+    }
+
+    public UserLoginDto(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    @Email(message = "Please enter valid email.")
     public String getEmail() {
         return email;
     }
@@ -16,8 +25,7 @@ public class UserLoginDto {
         this.email = email;
     }
 
-    @Pattern(regexp = "[A-Za-z\\d]{6,}",
-            message = "Enter valid password")
+    @Pattern(regexp = "[A-Za-z\\d]{6,}", message = "Please enter valid password longer than 6 symbols.")
     public String getPassword() {
         return password;
     }
@@ -25,11 +33,4 @@ public class UserLoginDto {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public UserLoginDto(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
-    private String password;
 }

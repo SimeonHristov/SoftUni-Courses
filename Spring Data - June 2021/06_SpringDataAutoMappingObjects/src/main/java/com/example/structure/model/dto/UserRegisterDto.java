@@ -1,5 +1,4 @@
 package com.example.structure.model.dto;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -21,7 +20,7 @@ public class UserRegisterDto {
         this.fullName = fullName;
     }
 
-    @Email(message = "Enter valid email")
+    @Email(message = "Please enter valid email.")
     public String getEmail() {
         return email;
     }
@@ -30,8 +29,7 @@ public class UserRegisterDto {
         this.email = email;
     }
 
-    @Pattern(regexp = "[A-Za-z\\d]{6,}",
-    message = "Enter valid password")
+    @Pattern(regexp = "[A-Za-z\\d]{6,}", message = "Please enter valid password longer than 6 symbols.")
     public String getPassword() {
         return password;
     }
@@ -56,5 +54,4 @@ public class UserRegisterDto {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-
 }

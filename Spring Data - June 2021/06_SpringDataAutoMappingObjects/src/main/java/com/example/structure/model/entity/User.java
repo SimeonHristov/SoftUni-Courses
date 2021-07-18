@@ -10,14 +10,14 @@ public class User extends BaseEntity {
     private String email;
     private String password;
     private String fullName;
-    private boolean isAdmin;
+    private Boolean isAdmin;
     private Set<Game> games;
 
     public User() {
     }
 
     @Column(name = " is_admin")
-    public boolean getAdmin() {
+    public Boolean getAdmin() {
         return isAdmin;
     }
 

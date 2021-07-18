@@ -1,6 +1,5 @@
 package com.example.structure.service.impl;
 
-
 import com.example.structure.model.dto.UserLoginDto;
 import com.example.structure.model.dto.UserRegisterDto;
 import com.example.structure.model.entity.User;
@@ -27,25 +26,22 @@ public class UserServiceImpl implements UserService {
         this.validationUtil = validationUtil;
     }
 
+
     @Override
     public void registerUser(UserRegisterDto userRegisterDto) {
-        if (!userRegisterDto.getPassword().equals(userRegisterDto.getConfirmPassword())) {
-            System.out.println("Password doesn't match!");
-            return;
-        }
 
-        Set<ConstraintViolation<UserRegisterDto>> violations =
-                validationUtil.violation(userRegisterDto);
+        if (!userRegisterDto.getPassword().equals(userRegisterDto.getConfirmPassword())) {
+            System.out.println("Wrong confirm password!");
+        }
+        Set<ConstraintViolation<UserRegisterDto>> violations = validationUtil.getViolations(userRegisterDto);
 
         if (!violations.isEmpty()) {
             violations
-                .stream()
-                .map(ConstraintViolation::getMessage)
-                .forEach(System.out::println);
-
+                    .stream()
+                    .map(ConstraintViolation::getMessage)
+                    .forEach(System.out::println);
             return;
         }
-
         User user = modelMapper.map(userRegisterDto, User.class);
 
         userRepository.save(user);
@@ -53,20 +49,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void loginUser(UserLoginDto userLoginDto) {
-        Set<ConstraintViolation<UserLoginDto>> violations = validationUtil.violation(userLoginDto);
+        Set<ConstraintViolation<UserLoginDto>> violations = validationUtil.getViolations(userLoginDto);
 
         if (!violations.isEmpty()) {
-            violations
-                    .stream()
+            violations.stream()
                     .map(ConstraintViolation::getMessage)
                     .forEach(System.out::println);
 
             return;
         }
 
-        User user = userRepository
-                .findByEmailAAndFullName(userLoginDto.getEmail(), userLoginDto.getPassword())
-                .orElse(null);
+        User user = userRepository.findByEmailAndPassword(userLoginDto.getEmail(), userLoginDto.getPassword()).orElse(null);
 
         if (user == null) {
             System.out.println("Incorrect username / password");
@@ -74,5 +67,15 @@ public class UserServiceImpl implements UserService {
         }
 
         loggedInUser = user;
+    }
+
+    @Override
+    public void logout() {
+        if (loggedInUser == null) {
+            System.out.println("Cannot logout. No user was logged in.");
+        }
+        else {
+            loggedInUser = null;
+        }
     }
 }
