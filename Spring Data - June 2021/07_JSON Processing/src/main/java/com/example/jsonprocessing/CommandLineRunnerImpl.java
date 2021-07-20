@@ -1,6 +1,7 @@
 package com.example.jsonprocessing;
 
 import com.example.jsonprocessing.service.CategoryService;
+import com.example.jsonprocessing.service.ProductService;
 import com.example.jsonprocessing.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -12,10 +13,12 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
     private final CategoryService categoryService;
     private final UserService userService;
+    private final ProductService productService;
 
-    public CommandLineRunnerImpl(CategoryService categoryService, UserService userService) {
+    public CommandLineRunnerImpl(CategoryService categoryService, UserService userService, ProductService productService) {
         this.categoryService = categoryService;
         this.userService = userService;
+        this.productService = productService;
     }
 
     @Override
@@ -26,5 +29,6 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     private void seedData() throws IOException {
         categoryService.seedCategories();
         userService.seedUsers();
+        productService.seedProducts();
     }
 }
