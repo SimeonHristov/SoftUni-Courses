@@ -1,9 +1,6 @@
 package com.example.jsonprocessing.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -15,6 +12,7 @@ public class User extends BaseEntity{
     private String lastName;
     private int age;
     private Set<User> friends;
+    private Set<Product> soldProducts;
 
     public User() {
     }
@@ -53,5 +51,14 @@ public class User extends BaseEntity{
 
     public void setFriends(Set<User> friends) {
         this.friends = friends;
+    }
+
+    @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER)
+    public Set<Product> getSoldProducts() {
+        return soldProducts;
+    }
+
+    public void setSoldProducts(Set<Product> soldProducts) {
+        this.soldProducts = soldProducts;
     }
 }

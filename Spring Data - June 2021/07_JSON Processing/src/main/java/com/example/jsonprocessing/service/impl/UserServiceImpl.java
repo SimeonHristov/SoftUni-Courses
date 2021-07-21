@@ -2,6 +2,7 @@ package com.example.jsonprocessing.service.impl;
 
 import com.example.jsonprocessing.constants.GlobalConstants;
 import com.example.jsonprocessing.model.dto.UserSeedDto;
+import com.example.jsonprocessing.model.dto.UserSoldDto;
 import com.example.jsonprocessing.model.entity.User;
 import com.example.jsonprocessing.repository.UserRepository;
 import com.example.jsonprocessing.service.UserService;
@@ -14,7 +15,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import static com.example.jsonprocessing.constants.GlobalConstants.RESOURCE_FILE_PATH;
 
@@ -56,5 +59,14 @@ public class UserServiceImpl implements UserService {
         return userRepository
                 .findById(randomId)
                 .orElse(null);
+    }
+
+    @Override
+    public List<UserSoldDto> findAllUesrsWithMoreThanOneSoldProducts() {
+        return userRepository
+                .findAllUsersWithMoreThanOneSoldProductsOrderByLastNameThenFirstName()
+                .stream()
+                .map(user -> modelMapper.map(user, UserSoldDto.class))
+                .collect(Collectors.toList());
     }
 }
