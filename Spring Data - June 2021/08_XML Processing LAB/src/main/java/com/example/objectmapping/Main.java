@@ -98,18 +98,5 @@ public class Main implements CommandLineRunner {
 
             line = sc.nextLine();
         }
-
-
-//
-//        List<ManagerDto> managers = this.employeeService.findAll();
-//        managers.forEach(managerDto -> {
-//            if (managerDto.getSubordinates().isEmpty()) {
-//                return;
-//            }
-//            System.out.println(managerDto.getFirstName() + " " + managerDto.getLastName() + " (" + managerDto.getSubordinates().size() + "):");
-//            managerDto.getSubordinates().forEach(employeeDto -> {
-//                System.out.println("\t" + employeeDto.getFirstName() + " " + employeeDto.getLastName() + " : " + employeeDto.getIncome());
-//            });
-//        });
     }
 }
