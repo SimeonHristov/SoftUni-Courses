@@ -2,10 +2,9 @@ package softuni.exam.models.entities;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "cars")
@@ -15,6 +14,10 @@ public class Car extends BaseEntity {
     private String model;
     private Integer kilometers;
     private LocalDate registeredOn;
+
+
+
+    private Set<Picture> picture;
 
     public Car() {
     }
@@ -53,5 +56,14 @@ public class Car extends BaseEntity {
 
     public void setRegisteredOn(LocalDate registeredOn) {
         this.registeredOn = registeredOn;
+    }
+
+    @OneToMany(mappedBy = "car", fetch = FetchType.EAGER)
+    public Set<Picture> getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Set<Picture> picture) {
+        this.picture = picture;
     }
 }
