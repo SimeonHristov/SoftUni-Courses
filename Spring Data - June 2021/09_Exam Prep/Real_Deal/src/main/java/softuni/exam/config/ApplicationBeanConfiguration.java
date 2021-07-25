@@ -11,7 +11,7 @@ import softuni.exam.util.ValidationUtil;
 @Configuration
 public class ApplicationBeanConfiguration {
 
-	//ToDo
+
 
     @Bean
     public Gson gson() {
