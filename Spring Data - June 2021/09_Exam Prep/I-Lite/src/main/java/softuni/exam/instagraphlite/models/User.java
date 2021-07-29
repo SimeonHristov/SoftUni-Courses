@@ -2,24 +2,22 @@ package softuni.exam.instagraphlite.models;
 
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity{
 
-    @Column(nullable = false, unique = true)
+
     private String username;
-    @Column(nullable = false)
     private String password;
-    @ManyToOne
-    private Picture picture;
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<Post> posts;
+    private Picture profilePicture;
+    private Set<Post> posts;
 
     public User() {
     }
 
+    @Column(nullable = false, unique = true)
     public String getUsername() {
         return username;
     }
@@ -28,6 +26,7 @@ public class User extends BaseEntity{
         this.username = username;
     }
 
+    @Column(nullable = false)
     public String getPassword() {
         return password;
     }
@@ -36,11 +35,21 @@ public class User extends BaseEntity{
         this.password = password;
     }
 
-    public Picture getPicture() {
-        return picture;
+    @ManyToOne
+    public Picture getProfilePicture() {
+        return profilePicture;
     }
 
-    public void setPicture(Picture picture) {
-        this.picture = picture;
+    public void setProfilePicture(Picture picture) {
+        this.profilePicture = picture;
+    }
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
     }
 }

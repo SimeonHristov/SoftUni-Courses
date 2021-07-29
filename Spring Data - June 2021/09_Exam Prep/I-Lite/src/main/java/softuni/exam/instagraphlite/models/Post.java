@@ -6,15 +6,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name = "posts")
 public class Post extends BaseEntity{
 
-    @Column(nullable = false)
+
     private String caption;
-
-    @ManyToOne
     private User user;
+    private Picture picture;
 
+    public Post() {
+    }
+
+    @ManyToOne(optional = false)
     public User getUser() {
         return user;
     }
@@ -23,6 +26,7 @@ public class Post extends BaseEntity{
         this.user = user;
     }
 
+    @ManyToOne(optional = false)
     public Picture getPicture() {
         return picture;
     }
@@ -31,12 +35,7 @@ public class Post extends BaseEntity{
         this.picture = picture;
     }
 
-    @ManyToOne
-    private Picture picture;
-
-    public Post() {
-    }
-
+    @Column(nullable = false)
     public String getCaption() {
         return caption;
     }

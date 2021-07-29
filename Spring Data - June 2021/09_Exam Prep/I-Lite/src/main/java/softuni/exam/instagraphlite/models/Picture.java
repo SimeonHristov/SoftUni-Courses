@@ -7,18 +7,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "pictures")
-public class Picture extends BaseEntity{
+public class Picture extends BaseEntity {
 
-
-    @Column(nullable = false)
     private String path;
-
-    @Column(nullable = false)
     private double size;
 
     public Picture() {
     }
 
+    @Column(nullable = false, unique = true)
     public String getPath() {
         return path;
     }
@@ -27,6 +24,7 @@ public class Picture extends BaseEntity{
         this.path = path;
     }
 
+    @Column(nullable = false)
     public double getSize() {
         return size;
     }

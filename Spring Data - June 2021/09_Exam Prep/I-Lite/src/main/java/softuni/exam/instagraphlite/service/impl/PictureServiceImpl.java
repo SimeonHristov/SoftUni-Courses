@@ -50,7 +50,8 @@ public class PictureServiceImpl implements PictureService {
 
         Arrays.stream(pictureSeedDtos)
                 .filter(pictureSeedDto -> {
-                    boolean isValid = validationUtil.isValid(pictureSeedDto);
+                    boolean isValid = validationUtil.isValid(pictureSeedDto)
+                                    && !isEntityExists(pictureSeedDto.getPath());
 
                     stringBuilder.append(isValid
                                         ? String.format("Successfully imported Picture, with size %.2f", pictureSeedDto.getSize())
@@ -66,7 +67,29 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
+    public boolean isEntityExists(String path) {
+        return pictureRepository.existsByPath(path);
+    }
+
+    @Override
     public String exportPictures() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+
+        pictureRepository
+                .findAllBySizeGreaterThanOrderBySize(30000D)
+                .forEach(picture -> {
+                    sb
+                            .append(String.format("%.2f - %s",
+                                    picture.getSize(),
+                                    picture.getPath()))
+                            .append(System.lineSeparator());
+                });
+
+        return sb.toString().trim();
+    }
+
+    @Override
+    public Picture findByPath(String profilePicturePath) {
+        return pictureRepository.findByPath(profilePicturePath).orElse(null);
     }
 }
