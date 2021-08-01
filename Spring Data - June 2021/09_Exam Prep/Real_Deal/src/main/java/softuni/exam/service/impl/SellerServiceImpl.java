@@ -58,7 +58,7 @@ public class SellerServiceImpl implements SellerService {
 
                     sb
                             .append(isValid
-                                            ? String.format("Successfully import seller %s - %s"
+          s                                  ? String.format("Successfully import seller %s - %s"
                                     ,SellerSeedDto.getLastName()
                                     ,SellerSeedDto.getEmail())
                                     : "Invalid seller")
