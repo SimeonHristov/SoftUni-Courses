@@ -1,30 +1,19 @@
 package bg.softuni.mobilelele.model;
 
+import org.dom4j.rule.Mode;
+
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Table(name = "brands")
-public class BrandEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class BrandEntity extends BaseEntity{
 
     private String name;
 
-    @Column(nullable = false)
-    private Instant created;
-
-    private Instant modified;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ModelEntity> models;
 
     public String getName() {
         return name;
@@ -34,19 +23,11 @@ public class BrandEntity {
         this.name = name;
     }
 
-    public Instant getCreated() {
-        return created;
+    public List<ModelEntity> getModels() {
+        return models;
     }
 
-    public void setCreated(Instant created) {
-        this.created = created;
-    }
-
-    public Instant getModified() {
-        return modified;
-    }
-
-    public void setModified(Instant modified) {
-        this.modified = modified;
+    public void setModels(List<ModelEntity> models) {
+        this.models = models;
     }
 }
