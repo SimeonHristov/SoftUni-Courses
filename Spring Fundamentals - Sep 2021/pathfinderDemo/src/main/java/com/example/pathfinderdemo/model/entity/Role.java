@@ -11,14 +11,17 @@ import javax.persistence.Table;
     @Table(name = "roles")
     public class Role extends BaseEntity {
 
-        private RoleNameEnum name;
+        private RoleNameEnum role;
 
-        @Enumerated(EnumType.STRING)
-        public RoleNameEnum getName() {
-            return name;
+        public Role() {
         }
 
-        public void setName(RoleNameEnum role) {
-            this.name = role;
+        @Enumerated(EnumType.STRING)
+        public RoleNameEnum getRole() {
+            return role;
+        }
+
+        public void setRole(RoleNameEnum role) {
+            this.role = role;
         }
     }
