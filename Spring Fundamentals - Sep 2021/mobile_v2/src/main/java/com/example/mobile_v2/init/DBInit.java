@@ -1,10 +1,13 @@
 package com.example.mobile_v2.init;
 
-import com.example.mobile_v2.model.BrandEntity;
-import com.example.mobile_v2.model.CategoryEnum;
-import com.example.mobile_v2.model.ModelEntity;
+import com.example.mobile_v2.model.entity.BrandEntity;
+import com.example.mobile_v2.model.entity.UserEntity;
+import com.example.mobile_v2.model.entity.enums.CategoryEnum;
+import com.example.mobile_v2.model.entity.ModelEntity;
 import com.example.mobile_v2.repository.BrandRepository;
+import com.example.mobile_v2.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,14 +15,36 @@ import java.util.List;
 @Component
 public class DBInit implements CommandLineRunner {
 
-    private final BrandRepository  brandRepository;
+    private final BrandRepository brandRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public DBInit(BrandRepository brandRepository) {
+    public DBInit(BrandRepository brandRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.brandRepository = brandRepository;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void run(String... args) {
+        initializeBrandsAndModels();
+        initializeUsers();
+    }
+
+    private void initializeUsers() {
+
+        if (userRepository.count() == 0) {
+            UserEntity admin = new UserEntity();
+            admin.setActive(true).
+                    setUsername("admin").
+                    setFirstName("Admin")
+                    .setLastName("Adminov")
+                    .setPassword(passwordEncoder.encode("test"));
+            userRepository.save(admin);
+        }
+    }
+
+    private void initializeBrandsAndModels() {
         if (brandRepository.count() == 0) {
             BrandEntity ford = new BrandEntity().setName("Ford");
 
@@ -36,7 +61,7 @@ public class DBInit implements CommandLineRunner {
                     .setEndYear(2002)
                     .setCategory(CategoryEnum.CAR);
 
-            ford.setModels(List.of(fiesta,escort));
+            ford.setModels(List.of(fiesta, escort));
             fiesta.setBrand(ford);
             escort.setBrand(ford);
 
