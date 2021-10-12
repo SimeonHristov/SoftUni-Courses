@@ -1,4 +1,4 @@
-package com.example.pathfinderdemo.model.binding;
+package com.example.pathfinderdemo.model.bindingModel;
 
 public class UserLoginBindingModel {
 
