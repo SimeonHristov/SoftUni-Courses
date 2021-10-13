@@ -1,6 +1,8 @@
 package com.example.pathfinderdemo.web;
 
 import com.example.pathfinderdemo.model.bindingModel.UserRegisterBindingModel;
+import com.example.pathfinderdemo.model.serviceModel.UserServiceModel;
+import com.example.pathfinderdemo.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,13 +19,13 @@ import javax.validation.Valid;
 @RequestMapping("users/")
 public class UserController {
 
-//    private final UserService userService;
-//    private final ModelMapper modelMapper;
-//
-//    public UserController(UserService userService, ModelMapper modelMapper) {
-//        this.userService = userService;
-//        this.modelMapper = modelMapper;
-//    }
+    private final UserService userService;
+    private final ModelMapper modelMapper;
+
+    public UserController(UserService userService, ModelMapper modelMapper) {
+        this.userService = userService;
+        this.modelMapper = modelMapper;
+    }
 
     @ModelAttribute
     public UserRegisterBindingModel userRegisterBindingModel()  {
@@ -39,13 +41,20 @@ public class UserController {
     public String registerConfirm(@Valid UserRegisterBindingModel userRegisterBindingModel,
                                   BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        if (bindingResult.hasErrors())
-        redirectAttributes
-                .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
-        redirectAttributes
-                .addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel", bindingResult);
+        if (bindingResult.hasErrors() || userRegisterBindingModel
+                .getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {
+            redirectAttributes
+                    .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
+            redirectAttributes
+                    .addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel", bindingResult);
 
-        return "redirect:register";
+            return "redirect:register";
+        }
+
+        userService.registerUser(modelMapper
+        .map(userRegisterBindingModel, UserServiceModel.class));
+
+        return "redirect:login";
     }
 
     @GetMapping("/login")
