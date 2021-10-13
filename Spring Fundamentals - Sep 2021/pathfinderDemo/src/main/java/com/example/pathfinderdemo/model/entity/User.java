@@ -65,7 +65,7 @@ public class User extends BaseEntity {
         this.level = level;
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     public Set<Role> getRoles() {
         return roles;
     }
