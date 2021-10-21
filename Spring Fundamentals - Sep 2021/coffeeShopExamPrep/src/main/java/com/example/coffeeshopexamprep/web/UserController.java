@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -44,7 +45,7 @@ public class UserController {
                     .addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
             redirectAttributes
                     .addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel"
-                            , userRegisterBindingModel);
+                            , bindingResult);
 
             return "redirect:register";
         }
@@ -70,7 +71,9 @@ public class UserController {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userLoginBindingModel", userLoginBindingModel);
-            redirectAttributes.addFlashAttribute("org.springramework.validation.BindingResult.userLoginBindingModel",bindingResult);
+            redirectAttributes.
+                 addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel"
+                         , bindingResult);
 
             return "redirect:login";
         }
@@ -87,6 +90,13 @@ public class UserController {
         }
 
         userService.loginUser(userServiceModel.getId(), userLoginBindingModel.getUsername());
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession){
+        httpSession.invalidate();
 
         return "redirect:/";
     }

@@ -38,9 +38,9 @@
                 <div class="form-group row">
                     <label for="orderTime" class="col-sm-2 col-form-label">Order time</label>
                     <div class="col-sm-10">
-                        <input th:field="*{orderTime}" th:errorclass="is-invalid" type="datetime-local" class="form-control" id="orderTime"
+                        <input th:field="*{orderTime}"  type="datetime-local" class="form-control" id="orderTime"
                                aria-describedby="orderTimeHelpInline">
-                        <small id="orderTimeHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                        <small id="orderTimeHelpInline" class="bg-danger text-light rounded">
                             Order time cannot be in the future.
                         </small>
                     </div>

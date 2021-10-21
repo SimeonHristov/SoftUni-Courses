@@ -9,6 +9,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class OrderAddBindingModel {
 
@@ -45,7 +46,7 @@ public class OrderAddBindingModel {
     }
 
     @PastOrPresent
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH'mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     public LocalDateTime getOrderTime() {
         return orderTime;
     }
