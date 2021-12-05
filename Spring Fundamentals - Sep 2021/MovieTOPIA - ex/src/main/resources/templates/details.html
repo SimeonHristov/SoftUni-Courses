@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons :: head"></head>
+
+<body>
+
+<header th:replace="fragments/commons :: navigation"></header>
+
+<main class="p-5 align-content-center bg-blur">
+    <div class="justify-content-center">
+        <h1 class="text-light border-left border-white pl-4">Movie Details</h1>
+    </div>
+    <div th:object="${movie}" class="row rounded mb-5 mt-3">
+        <div  class="col-md-6 bg-blur text-light rounded ">
+            <dl class="row pt-3">
+                <dt class="col-sm-3">Name</dt>
+                <dd class="col-sm-9" th:text="*{name}">Name</dd>
+
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9" th:text="*{description}">Description
+                </dd>
+
+                <dt class="col-sm-3">Director</dt>
+                <dd class="col-sm-9" th:text="*{director}">Director
+                </dd>
+
+                <dt class="col-sm-3">Release Date</dt>
+                <dd class="col-sm-9" th:text="*{releaseDate}">Release Date
+                </dd>
+
+                <dt class="col-sm-3">IMDB Rating</dt>
+                <dd class="col-sm-8" th:text="*{rating}">Rating
+                </dd>
+
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-6 bg-transparent rounded">
+            <div class="rounded embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" th:src="'https://www.youtube.com/embed/' + *{trailer}"
+                        allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+</main>
+<footer th:replace="fragments/commons :: footer"></footer>
+</body>
+</html>
