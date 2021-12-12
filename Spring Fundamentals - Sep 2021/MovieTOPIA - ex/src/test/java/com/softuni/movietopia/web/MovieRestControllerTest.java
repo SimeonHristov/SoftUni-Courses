@@ -41,10 +41,10 @@ public class MovieRestControllerTest {
   @BeforeEach
   public void setUp() {
     testData = new MovieTestData(
-        userRepository,
+            userRepository,
             directorRepository,
             movieRepository,
-        logRepository
+            logRepository
     );
     testData.init();
   }
@@ -60,9 +60,9 @@ public class MovieRestControllerTest {
     mockMvc.perform(
         MockMvcRequestBuilders.get("/movies/api")).
         andExpect(status().isOk()).
-        andExpect(jsonPath("[0].name").value("randomMovie")).
-        andExpect(jsonPath("[0].genre").value(Genre.FICTION.name())).
-        andExpect(jsonPath("[1].name").value("anotherRandomMovie")).
-        andExpect(jsonPath("[1].genre").value(Genre.ACTION.name()));
+        andExpect(jsonPath("$.[0].name").value("randomMovie name")).
+        andExpect(jsonPath("$.[0].genre").value(Genre.FICTION.name())).
+        andExpect(jsonPath("$.[1].name").value("anotherRandomMovie")).
+        andExpect(jsonPath("$.[1].genre").value(Genre.ACTION.name()));
   }
 }

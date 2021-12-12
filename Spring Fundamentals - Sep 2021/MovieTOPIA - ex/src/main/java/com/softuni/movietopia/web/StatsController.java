@@ -17,7 +17,7 @@ public class StatsController {
     }
 
     @GetMapping
-    public String stats(Model model){
+    public String logData(Model model){
         model.addAttribute("logs",
                 logService.findAllLogs());
         return "stats";

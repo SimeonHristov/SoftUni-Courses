@@ -61,10 +61,12 @@
                             <a type="button" class="btn btn-sm btn-outline-secondary"
                                th:href="@{/home/{id}/details(id=*{id})}">Details</a>
                         </div>
+                        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                         <form th:method="delete"
                               th:action="@{/home/{id}(id=*{id})}">
                             <input type="submit" value="Delete" class="btn btn-sm btn-outline-secondary"/>
                         </form>
+                        </th:block>
                     </div>
                 </div>
             </div>

@@ -24,4 +24,4 @@ spring:
 
 carousel:
   images: avatar3.jpg, avengers.jpg, darkknight.jpg, deadpool.jpg, sw-fa.jpg
-  refresh-cron: "0 */10 * * * *"
+  refresh-cron: "*/5 * * * * *"

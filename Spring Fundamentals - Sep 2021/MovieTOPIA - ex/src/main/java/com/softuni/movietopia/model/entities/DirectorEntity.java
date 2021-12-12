@@ -3,6 +3,7 @@ package com.softuni.movietopia.model.entities;
 import com.google.gson.annotations.Expose;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,6 +16,10 @@ public class DirectorEntity extends BaseEntity {
   @Expose
   @Column(nullable = false, columnDefinition = "TEXT")
   private String bio;
+
+
+  @ManyToOne
+  private UserEntity userEntity;
 
   public String getName() {
     return name;
@@ -31,6 +36,16 @@ public class DirectorEntity extends BaseEntity {
 
   public DirectorEntity setBio(String careerInformation) {
     this.bio = careerInformation;
+    return this;
+  }
+
+
+  public UserEntity getUserEntity() {
+    return userEntity;
+  }
+
+  public DirectorEntity setUserEntity(UserEntity userEntity) {
+    this.userEntity = userEntity;
     return this;
   }
 

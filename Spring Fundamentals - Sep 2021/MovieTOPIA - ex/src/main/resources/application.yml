@@ -27,6 +27,10 @@ carousel:
   images: avatar3.jpg, avengers.jpg, darkknight.jpg, deadpool.jpg, sw-fa.jpg
   refresh-cron: "0 */5 * * * *"
 
+#server:
+#  error:
+#    include-stacktrace: never
+
 #cloudinary:
 #  api-key:
 #    api-secret:

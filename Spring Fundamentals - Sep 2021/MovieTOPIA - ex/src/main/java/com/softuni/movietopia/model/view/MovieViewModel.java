@@ -16,6 +16,7 @@ public class MovieViewModel {
   private Genre genre;
   private String director;
 
+
   public MovieViewModel() {
   }
 
@@ -100,4 +101,6 @@ public class MovieViewModel {
     this.director = director;
     return this;
   }
+
+
 }

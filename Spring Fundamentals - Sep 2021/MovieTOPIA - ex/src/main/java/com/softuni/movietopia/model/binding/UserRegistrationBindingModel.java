@@ -17,6 +17,9 @@ public class UserRegistrationBindingModel {
   @NotEmpty
   @Email
   private String email;
+
+
+
   @NotEmpty
   @Size(min = 3)
   private String fullName;
@@ -44,7 +47,7 @@ public class UserRegistrationBindingModel {
     return this;
   }
 
-  public String getFullname() {
+  public String getFullName() {
     return fullName;
   }
 
@@ -52,7 +55,6 @@ public class UserRegistrationBindingModel {
     this.fullName = fullName;
     return this;
   }
-
   public String getPassword() {
     return password;
   }

@@ -42,7 +42,8 @@ public class HomeController {
 
   @GetMapping("/home/{id}/details")
   public String showDetails(
-          @PathVariable Long id, Model model) {
+          @PathVariable Long id,
+          Model model) {
     model.addAttribute("movie", this.movieService.findById(id));
     return "details";
   }

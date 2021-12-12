@@ -12,7 +12,7 @@
     <h1 class="text-light border-bottom">Register</h1>
     <div class="d-flex justify-content-center ">
         <div class="row col-lg-6 align-items-center">
-            <img alt="Movies picture" th:src="@{/images/movies.jpg}" class="w-100 rounded">
+            <img alt="Movies picture" th:src="@{/images/x.jpg}" class="w-100 rounded">
         </div>
         <div class="row g-3">
             <form
@@ -47,8 +47,8 @@
                         <label for="inputFullName" class="col-form-label text-light">Full Name</label>
                     </div>
                     <div class="col-auto">
-                        <input name="fullname"
-                               th:value="*{fullname}"
+                        <input name="fullName"
+                               th:value="*{fullName}"
                                th:errorclass="is-invalid"
                                required minlength="5" maxlength="20"
                                type="text"

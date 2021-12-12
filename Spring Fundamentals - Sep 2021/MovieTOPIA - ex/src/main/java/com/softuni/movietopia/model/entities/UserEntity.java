@@ -7,19 +7,23 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 
 @Entity
 @Table(name="users")
 public class UserEntity extends BaseEntity {
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String username;
 
   @Column(nullable = false)
   private String password;
 
   @Column(nullable = false)
-  private String fullname;
+  private String fullName;
+
+  @Email
+  private String email;
 
   @ManyToMany(fetch = FetchType.EAGER)
   private List<UserRoleEntity> roles = new ArrayList<>();
@@ -42,14 +46,24 @@ public class UserEntity extends BaseEntity {
     return this;
   }
 
-  public String getFullname() {
-    return fullname;
+  public String getFullName() {
+    return fullName;
   }
 
-  public UserEntity setFullname(String fullname) {
-    this.fullname = fullname;
+  public UserEntity setFullName(String fullName) {
+    this.fullName = fullName;
     return this;
   }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public UserEntity setEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
 
   public List<UserRoleEntity> getRoles() {
     return roles;

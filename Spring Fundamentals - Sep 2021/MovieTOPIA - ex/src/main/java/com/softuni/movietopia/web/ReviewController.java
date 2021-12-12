@@ -78,20 +78,12 @@ public class ReviewController {
         return "redirect:/reviews/all";
     }
 
-    @GetMapping("/reviews/all/{id}/details-review")
-    public String reviewDetails(@PathVariable Long id, Model model) {
+    @GetMapping("reviews/{id}/details-review")
+    public String reviewDetails(@PathVariable Long id,
+                                Model model) {
         ReviewViewModel review = reviewService.findReviewByID(id);
 
-        model.addAttribute("review", reviewService.findReviewByID(id));
-
-        return "details-review";
-    }
-
-    @GetMapping("/reviews/all")
-    public String showReviewDetails(@PathVariable Long id, Model model) {
-        ReviewViewModel review = reviewService.findReviewByID(id);
-
-        model.addAttribute("review", reviewService.findReviewByID(id));
+        model.addAttribute("review", this.reviewService.findReviewByID(id));
 
         return "details-review";
     }

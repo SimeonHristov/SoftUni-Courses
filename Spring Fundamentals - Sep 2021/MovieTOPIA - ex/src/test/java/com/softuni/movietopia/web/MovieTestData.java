@@ -37,7 +37,7 @@ class MovieTestData {
     directorEntity = directorRepository.save(directorEntity);
 
     UserEntity userEntity = new UserEntity();
-    userEntity.setUsername("pesho").setPassword("qweqwe").setFullname("pesho pesho");
+    userEntity.setUsername("pesho").setPassword("qweqwe").setFullName("pesho pesho").setEmail("pesh@pesh");
     userEntity = userRepository.save(userEntity);
 
     MovieEntity randomMovie = new MovieEntity();
@@ -45,12 +45,12 @@ class MovieTestData {
         setName("randomMovie name").
             setPoster("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-movies-1614634680.jpg").
             setTrailer("9ix7TUGVYIo").
-        setDescription("Sample description").
-            setRating(BigDecimal.TEN).
-        setReleaseDate(LocalDate.of(1988, 3, 3).atStartOfDay(ZoneId.systemDefault()).toInstant()).
-        setGenre(Genre.FICTION).
-        setDirector(directorEntity.getName()).
-        setUserEntity(userEntity);
+            setDescription("Sample description").
+            setRating(BigDecimal.valueOf(8.4)).
+            setReleaseDate(LocalDate.of(1988, 3, 3).atStartOfDay(ZoneId.systemDefault()).toInstant()).
+            setGenre(Genre.FICTION).
+            setDirector(directorEntity.getName()).
+            setUserEntity(userEntity);
 
     randomMovie = movieRepository.save(randomMovie);
 
@@ -70,6 +70,7 @@ class MovieTestData {
 
 
     testMovieId = anotherRandomMovie.getId();
+    testMovieId = randomMovie.getId();
   }
 
   void cleanUp() {

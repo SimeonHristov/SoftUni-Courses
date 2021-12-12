@@ -17,7 +17,8 @@
                 <h1
                     class="display-4 font-italic font-weight-bold"
                     th:text="${latestReview.title}">Title of the pinned review</h1>
-                <p class="lead mb-0"><a href="${/details-review/{id}/details(id=*{id})}" class="text-white font-weight-bold">Continue reading...</a></p>
+                <p class="lead mb-0"><a th:href="@{/reviews/{id}/details-review(id=${latestReview.getId()})}"
+                                        class="text-white font-weight-bold">Continue reading...</a></p>
             </div>
         </div>
 
@@ -27,8 +28,8 @@
                     <div class="card-body d-flex flex-column align-items-start">
                         <strong class="d-inline-block mb-2 text-primary" th:text="|Genre: *{genre}|">Genre</strong>
                         <h3 class="mb-0"  th:text="|Title: *{title}|">Title</h3>
-                        <p class="card-text mb-auto" th:text="*{#strings.abbreviate(content,25)}">First 60 characters from content + ...</p>
-                        <a  th:href="@{/details-review/{id}/details(id=*{id})}">Continue reading</a>
+                        <p class="card-text mb-auto" th:text="*{#strings.abbreviate(content,25)}">First 25 characters from content + ...</p>
+                        <a  th:href="@{/reviews/{id}/details-review(id=*{id})}">Continue reading</a>
                     </div>
                 </div>
             </div>

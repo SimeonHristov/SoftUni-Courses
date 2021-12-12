@@ -23,7 +23,7 @@ public class UserRegService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    com.softuni.movietopia.model.entities.UserEntity userEntity = userRepository.
+  UserEntity userEntity = userRepository.
         findByUsername(username).
         orElseThrow(() -> new UsernameNotFoundException("User with name " + username + " was not found!"));
 

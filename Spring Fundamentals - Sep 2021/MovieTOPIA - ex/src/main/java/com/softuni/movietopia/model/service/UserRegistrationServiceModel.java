@@ -4,6 +4,9 @@ public class UserRegistrationServiceModel {
 
   private String username;
   private String email;
+
+
+
   private String fullName;
   private String password;
 
@@ -25,7 +28,6 @@ public class UserRegistrationServiceModel {
     this.email = email;
     return this;
   }
-
   public String getFullName() {
     return fullName;
   }
@@ -34,6 +36,7 @@ public class UserRegistrationServiceModel {
     this.fullName = fullName;
     return this;
   }
+
 
   public String getPassword() {
     return password;

@@ -56,17 +56,17 @@ body {
     background-color:  #add8e6;
 }
 
-/*input:valid {*/
-/*    border: limegreen solid 2px;*/
-/*    background-image: linear-gradient(to left, white, lawngreen);*/
-/*}*/
+input:valid {
+    border: limegreen solid 2px;
+    background-image: linear-gradient(to left, white, lawngreen);
+}
 
-/*input:invalid{*/
-/*    border: solid 2px;*/
-/*    border: indianred solid 2px;*/
-/*}*/
+input:invalid{
+    border: solid 2px;
+    border: indianred solid 2px;
+}
 
-/*input:invalid:required{*/
-/*    border: indianred solid 2px;*/
-/*    background-image: linear-gradient(to left, white, indianred);*/
-/*}*/
+input:invalid:required{
+    border: indianred solid 2px;
+    background-image: linear-gradient(to left, white, indianred);
+}

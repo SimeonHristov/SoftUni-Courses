@@ -29,6 +29,7 @@
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="/statistics">Statistics</a>
+        <a class="dropdown-item" href="/requests">Requests overview</a>
         <a class="dropdown-item" href="/reviews/add">Add review</a>
         <a class="dropdown-item" href="#">Manage users</a>
       </div>
@@ -55,6 +56,9 @@
         </li>
         <li sec:authorize="isAuthenticated()" class="nav-item ">
           <a class="nav-link text-white active h5" href="/movies/add">Add Movie</a>
+        </li>
+        <li sec:authorize="isAuthenticated()" class="nav-item ">
+          <a class="nav-link text-white active h5" href="/directors/add">Add Director</a>
         </li>
         <li sec:authorize="isAuthenticated()" class="nav-item ">
           <a class="nav-link text-white active h5" href="/reviews/all">All reviews</a>

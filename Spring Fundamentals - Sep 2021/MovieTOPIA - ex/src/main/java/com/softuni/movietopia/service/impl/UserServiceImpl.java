@@ -1,5 +1,6 @@
 package com.softuni.movietopia.service.impl;
 
+import com.softuni.movietopia.exceptions.ObjectNotFoundException;
 import com.softuni.movietopia.model.entities.UserEntity;
 import com.softuni.movietopia.model.entities.UserRoleEntity;
 import com.softuni.movietopia.model.entities.enums.UserRole;
@@ -9,6 +10,7 @@ import com.softuni.movietopia.repository.UserRoleRepository;
 import com.softuni.movietopia.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -53,8 +55,8 @@ public class UserServiceImpl implements UserService {
 
             userRoleRepository.saveAll(List.of(adminRole, userRole));
 
-            UserEntity admin = new UserEntity().setUsername("admin").setFullname("admin admin").setPassword(passwordEncoder.encode("admin"));
-            UserEntity user = new UserEntity().setUsername("user").setFullname("user user").setPassword(passwordEncoder.encode("userr"));
+            UserEntity admin = new UserEntity().setUsername("admin").setFullName("admin admin").setEmail("email@email").setPassword(passwordEncoder.encode("admin"));
+            UserEntity user = new UserEntity().setUsername("user").setFullName("user user").setEmail("email2@email").setPassword(passwordEncoder.encode("userr"));
             admin.setRoles(List.of(adminRole, userRole));
             user.setRoles(List.of(userRole));
 
@@ -105,4 +107,5 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(IllegalArgumentException::new);
 
     }
+
 }

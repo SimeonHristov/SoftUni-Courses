@@ -1,20 +1,28 @@
 package com.softuni.movietopia.service.impl;
 
 import com.softuni.movietopia.model.entities.DirectorEntity;
+import com.softuni.movietopia.model.entities.UserEntity;
+import com.softuni.movietopia.model.service.DirectorServiceModel;
 import com.softuni.movietopia.repository.DirectorRepository;
+import com.softuni.movietopia.repository.UserRepository;
 import com.softuni.movietopia.service.DirectorService;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.modelmapper.ModelMapper;
 
 @Service
 public class DirectorServiceImpl implements DirectorService {
 
     private final DirectorRepository directorRepository;
+    private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
 
     public DirectorServiceImpl(
-            DirectorRepository directorRepository
-    ) {
+            DirectorRepository directorRepository,
+            UserRepository userRepository, ModelMapper modelMapper) {
         this.directorRepository = directorRepository;
+        this.userRepository = userRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -64,5 +72,17 @@ public class DirectorServiceImpl implements DirectorService {
         return directorRepository
                 .findByName(director)
                 .orElseThrow(IllegalArgumentException::new);
+    }
+
+    @Override
+    public void addDirector(DirectorServiceModel serviceModel) {
+        DirectorEntity directorEntity = modelMapper.map(serviceModel, DirectorEntity.class);
+        UserEntity creator = userRepository.
+                findByUsername(serviceModel.getUser()).
+                orElseThrow(() -> new IllegalArgumentException("Creator " + serviceModel.getUser() + " could not be found"));
+        directorEntity.setUserEntity(creator);
+
+        directorRepository.save(directorEntity);
+
     }
 }
