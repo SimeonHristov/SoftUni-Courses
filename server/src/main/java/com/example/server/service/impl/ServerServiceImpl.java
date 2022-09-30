@@ -50,7 +50,7 @@ public class ServerServiceImpl implements ServerService {
 
     @Override
     public Server get(Long id) {
-        log.info("Fetching server by id: {}", id);
+        log.info("Fetching server by ID: {}", id);
         return serverRepository.findById(id).get();
     }
 
@@ -62,7 +62,9 @@ public class ServerServiceImpl implements ServerService {
 
     @Override
     public Boolean delete(Long id) {
-        return null;
+        log.info("Deleting server by ID: {}", id);
+        serverRepository.deleteById(id);
+        return true;
     }
     private String setServerImageUrl() {
         return null;
