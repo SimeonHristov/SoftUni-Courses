@@ -16,7 +16,8 @@
                 </a>
 
                 <span>
-                    <select name="status" class="btn btn-info" style="height: 32.91px">
+                    <select name="status" 
+                        class="btn btn-info" style="height: 32.91px">
                         <option value="ALL">ALL</option>
                         <option value="SERVER_UP">SERVER UP</option>
                         <option value="SERVER_DOWN">SERVER DOWN</option>
@@ -53,28 +54,37 @@
                         <td>memory</td>
                         <td>type</td>
                         <td>
-                            <span class="badge"></span>
+                            <span class="badge">
+                            </span>
                         </td>
                         <td>
                             <a style="cursor: pointer;">
-                                <i class="material-icons" title="Ping server">&#xe328;</i>
-                                <i class="fa fa-spinner fa-spin" style="font-size: 24px"></i>
+                                <i 
+                                    class="material-icons" title="Ping server">&#xe328;</i>
+                                <i 
+                                    class="fa fa-spinner fa-spin" style="font-size: 24px"></i>
                             </a>
                         </td>
                         <td>
-                            <a class="delete" data-toggle="modal" style="cursor: pointer;"><i class="material-icons"
-                                    data-toggle="modal" title="Delete">&#xe872;</i></a>
+                            <a class="delete" data-toggle="modal" 
+                               style="cursor: pointer;"><i class="material-icons" data-toggle="modal" 
+                                    title="Delete">&#xe872;</i></a>
                         </td>
-                    </tr>
                 </tbody>
             </table>
         </ng-container>
+        <ng-container>
+            <div class="alert-danger">
+                error
+            </div>
+        </ng-container>
     </ng-container>
-    <div class="alert-danger">
-        error
-    </div>
-    </ng-container>
-    </ng-container>
+    </div>  
 </div>
 </div>
-</div>
+
+<!-- Add server Modal HTML -->
+<div id="addEmployeeModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
