@@ -36,6 +36,7 @@ public class ServerResource {
                 Response.builder()
                         .timeStamp(now())
                         .data(of("servers",serverService.list(30)))
+                        .message("Servers retrieved")
                         .status(OK)
                         .statusCode(OK.value())
                         .build()
