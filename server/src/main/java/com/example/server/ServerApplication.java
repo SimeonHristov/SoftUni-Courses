@@ -23,7 +23,7 @@ public class ServerApplication {
 	@Bean
 	CommandLineRunner run(ServerRepository serverRepository) {
 		return args -> {
-			serverRepository.save(new Server(null,"192.168.1.160",
+			serverRepository.save(new Server(null,"192.168.1.1",
 					"Prod","64 GB", "Production Environment Server",
 					"http://localhost:8080/server/image/s1.png", Status.SERVER_UP));
 			serverRepository.save(new Server(null,"192.168.1.58",

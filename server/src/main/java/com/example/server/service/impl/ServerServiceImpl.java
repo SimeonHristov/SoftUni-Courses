@@ -39,7 +39,7 @@ public class ServerServiceImpl implements ServerService {
         log.info("Pinging server IP: {}", ipAddress);
         Server server = serverRepository.findByIpAddress(ipAddress);
         InetAddress address = InetAddress.getByName(ipAddress);
-        server.setStatus(address.isReachable(10000) ? SERVER_UP : SERVER_DOWN);
+        server.setStatus(address.isReachable(500) ? SERVER_UP : SERVER_DOWN);
         serverRepository.save(server);
         return server;
     }
